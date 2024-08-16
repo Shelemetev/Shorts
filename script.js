@@ -9,6 +9,9 @@ let ModalOpen = () => {
 
 document.querySelector('.modal__close').addEventListener('click', () => {
   ModalClose()
+  document.querySelectorAll('.modal__video').forEach(item => {
+    item.pause()
+  })
 })
 
 let source = []
