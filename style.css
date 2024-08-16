@@ -1,0 +1,152 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+p,h1,h2,h3 {
+    padding: 0 ;
+    margin: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.body {
+    position: relative;
+    height: 100vh;
+}
+
+.main__title {
+    font-size: 32px;
+    font-weight: 500;
+}
+
+.main__title-box {
+    display: flex;
+    gap: 12px;
+}
+
+.main {
+    padding-top: 100px;
+    z-index: 0;
+}
+
+.main__item {
+    width: 150px;
+    height: 311px;
+    cursor: pointer;
+    /* z-index: 100; */
+}
+
+.main__item-title {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #0D1C12;
+}
+
+.main__items {
+    margin-top: 24px;
+    display: flex;
+    gap: 16px;
+}
+
+.modal__back {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    background-color: #000000E5;
+    z-index: 1;
+}
+
+.modal {
+    position: absolute;
+    left: 50%;
+    top: 20px;
+    transform: translate(-50%,-50%);
+    z-index: 2;
+
+}
+
+.modal__video {
+    width: auto;
+    height: 890px;
+    border-radius: 32px;
+}
+
+.modal__close {
+    position: absolute;
+    z-index: 100;
+    top: 50px;
+    right: 50px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50px;
+    outline: none;
+    border: none;
+    background-color: #234546;
+}
+
+.modal__close::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%) rotate(45deg);
+    background-color: #FFFFFF99;
+}
+
+.modal__close::after {
+    content: '';
+    width: 20px;
+    height: 1px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%) rotate(-45deg);
+    background-color: #FFFFFF99;
+}
+
+.item--hidden {
+    z-index: -999 !important;
+    opacity: 0;
+}
+
+.modal__video {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50% );
+}
+
+.modal__video:not(:first-of-type) {
+    margin-top: 10px;
+}
+
+.modal__inner {
+    position: absolute;
+    transition: 0.4s;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+}
+
+.modal__video--disable {
+    opacity: 0.3;
+}
+
+.modal__video-btns {
+    position: relative;
+    width: 60px;
+    height: 358px;
+    background-color: aqua;
+    right: -100px;
+    z-index: 20;
+}
