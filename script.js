@@ -8,6 +8,7 @@ let ModalOpen = () => {
 }
 
 document.querySelector('.modal__close').addEventListener('click', () => {
+  document.querySelector('.modal__inner').style.top = "auto"
   ModalClose()
   document.querySelectorAll('.modal__video').forEach(item => {
     item.pause()
@@ -32,10 +33,11 @@ let play = () => {
     if (parseInt(item.getAttribute('index')) === count) {
       item.classList.remove('modal__video--disable');
       item.currentTime = 0
+      item.volume = 0.1
       item.play()
-      console.log(item);
     } else {
       item.classList.add('modal__video--disable')
+      item.volume = 0.1
       item.pause()
     }
   })
@@ -44,26 +46,49 @@ let play = () => {
 source.map((value, index) => {
   if (index === count) {
     document.querySelector('.modal__inner').innerHTML +=
-      `<video class="modal__video"  index="${index}" loop>
-        <source src="${value}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' >
-        <div class="modal__video-btns">
-          <button class="modal__video-btn--sound">sdsdsd</button>
-          <button class="modal__video-btn--lile">ssdsd</button>
-          <button class="modal__video-btn--dislike">sdsds</button>
-          <button class="modal__video-btn--share">sds</button>
-        </div>
-      </video>`
+      ` <div class="modal__video-box">
+    <video class="modal__video" index="${index}" loop>
+      <source src="${value}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' >
+      
+    </video>
+    <div class="modal__video-btns">
+      <button class="modal__video-btn--sound" index="${index}">
+        <img class="modal__video-btn--img-sound" src="./image/sound.svg" alt="" srcset="">
+        <img class="modal__video-btn--img-sound-black" src="./image/sound-black.svg" alt="" srcset="">
+      </button>
+      <button class="modal__video-btn--like">
+        <img class="modal__video-btn--img" src="./image/Like.svg" alt="" srcset="">
+      </button>
+      <button class="modal__video-btn--dislike">
+        <img class="modal__video-btn--img" src="./image/Dislike.svg" alt="" srcset="">
+      </button>
+      <button class="modal__video-btn--share">
+        <img class="modal__video-btn--img" src="./image/share.svg" alt="" srcset="">
+      </button>
+      </div>
+  </div> `
   } else {
     document.querySelector('.modal__inner').innerHTML +=
-      `<video class="modal__video modal__video--disable"  index="${index}" loop>
-        <source src="${value}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' >
+      ` <div class="modal__video-box">
+        <video class="modal__video modal__video--disable" index="${index}" loop>
+          <source src="${value}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' >
+        </video>
         <div class="modal__video-btns">
-        <button class="modal__video-btn--sound">sdsdsd</button>
-        <button class="modal__video-btn--lile">ssdsd</button>
-        <button class="modal__video-btn--dislike">sdsds</button>
-        <button class="modal__video-btn--share">sds</button>
-        </div>
-      </video>`
+            <button class="modal__video-btn--sound" index="${index}">
+              <img class="modal__video-btn--img-sound" src="./image/sound.svg" alt="" srcset="">
+              <img class="modal__video-btn--img-sound-black" src="./image/sound-black.svg" alt="" srcset="">
+            </button>
+            <button class="modal__video-btn--like">
+              <img class="modal__video-btn--img" src="./image/Like.svg" alt="" srcset="">
+            </button>
+            <button class="modal__video-btn--dislike">
+              <img class="modal__video-btn--img" src="./image/Dislike.svg" alt="" srcset="">
+            </button>
+            <button class="modal__video-btn--share">
+              <img class="modal__video-btn--img" src="./image/share.svg" alt="" srcset="">
+            </button>
+          </div>
+      </div> `
   }
 })
 
@@ -73,7 +98,13 @@ let step = height / maxVideo
 
 let px = 0
 
+let disable 
+
+let paused
+
 window.addEventListener('wheel', (event) => {
+
+
 
   if (event.deltaY > 0) {
     px += 50
@@ -103,6 +134,11 @@ window.addEventListener('wheel', (event) => {
 
     play()
 
+    disable,paused = false
+
+    document.querySelectorAll('.modal__video-btn--sound').forEach(button => {
+      button.classList.remove('modal__video-btn--disable')
+    })
   }
 
 
@@ -126,6 +162,11 @@ window.addEventListener('wheel', (event) => {
 
     play()
 
+    disable,paused = false
+
+    document.querySelectorAll('.modal__video-btn--sound').forEach(button => {
+      button.classList.remove('modal__video-btn--disable')
+    })
   }
 
 
@@ -146,12 +187,13 @@ document.querySelectorAll('.main__item').forEach(item => {
       if (item.getAttribute('number') == video.getAttribute('index')) {
         video.classList.remove("modal__video--disable")
         play()
+        disable,paused = false
       }
     })
 
   })
 
- 
+
 })
 
 {
@@ -184,7 +226,7 @@ document.querySelectorAll('.main__item').forEach(item => {
 
 
     if (Math.abs(yDiff) > Math.abs(xDiff) && (yDiff >= 10 || yDiff <= -10)) {
-      if (yDiff < 0 ) {
+      if (yDiff < 0) {
         px -= 100
         document.querySelector('.modal__inner').style.top = `${-(step * count) - px}px`
         if (px = -100) {
@@ -193,20 +235,20 @@ document.querySelectorAll('.main__item').forEach(item => {
           // } else {
           //   count--
           // }
-      
+
           count--
-      
+
           if (count < 0) {
             count = 0
           } else if (count >= maxVideo) {
             count = maxVideo - 1
           }
-      
+
           document.querySelector('.modal__inner').style.top = `${step * -count}px`
           px = 0
-      
+
           play()
-      
+
         }
       } else {
         px += 100
@@ -217,20 +259,20 @@ document.querySelectorAll('.main__item').forEach(item => {
           // } else {
           //   count--
           // }
-      
+
           count++
-      
+
           if (count < 0) {
             count = 0
           } else if (count >= maxVideo) {
             count = maxVideo - 1
           }
-      
+
           document.querySelector('.modal__inner').style.top = `${step * -count}px`
           px = 0
-      
+
           play()
-      
+
         }
       }
     }
@@ -239,3 +281,40 @@ document.querySelectorAll('.main__item').forEach(item => {
 
   }
 }
+
+
+document.querySelectorAll('.modal__video-btn--sound').forEach(button => {
+  
+  button.addEventListener('click', () => {
+    console.log('ds');
+    document.querySelectorAll('.modal__video').forEach(video => {
+      if (video.getAttribute('index') == button.getAttribute('index')) {
+        if (disable === false) {
+          video.volume = 0
+          disable = true
+          console.log('start');
+          button.classList.add('modal__video-btn--disable')
+        } else {
+          video.volume = 0.1
+          disable = false
+          console.log('stop');
+          button.classList.remove('modal__video-btn--disable')
+
+        }
+      } 
+    })
+  })
+})
+
+document.querySelectorAll('.modal__video').forEach(item => {
+  item.addEventListener('click', () => {
+    if (paused === false) {
+      item.pause()
+      paused = true
+    } else {
+      item.play()
+      paused = false
+      item.classList.remove('modal__video--stoped')
+    }
+  })
+})
